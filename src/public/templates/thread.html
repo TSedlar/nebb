@@ -1,0 +1,37 @@
+<div class="container">
+    <h5 class="section">{{ thread.name }}</h5>
+    <div class="category row-fluid">
+        <div class="comment col-gpxs-12">
+            <div class="comment-user-icon pull-left">
+                <img class="img-comment-user-icon" [src]="thread.author?.avatar" />    
+            </div>
+            <a class="comment-author" [routerLink]="'/users' + thread.author?._id">{{ thread.author?.name }}</a>
+            <div class="comment-author-pip-container">
+                <span *ngFor="let title of thread.author?.titles" class="comment-author-pip">
+                    {{ title.name }}
+                </span>
+            </div>
+            <p class="comment-text">{{ thread.content }}</p>
+        </div>
+        <div class="thread-info col-gpxs-12">
+            <span class="thread-count">{{ thread.comment_count }} Comments</span>
+            <span class="thread-count">{{ views }} Views</span>
+        </div>
+    </div>
+    <div *ngFor="let comment of thread.comments; let idx = index" class="category row-fluid">
+        <div class="comment col-gpxs-12">
+            <div class="comment-user-icon pull-left">
+                <img class="img-comment-user-icon" [src]="comment.author?.avatar" />    
+            </div>
+            <a class="comment-author" [routerLink]="'/users' + comment.author?._id">{{ comment.author?.name }}</a>
+            <a class="comment-post-number" 
+                [routerLink]="'/thread/' + thread.category + '/' + thread._id + '/' + comment._id">#{{ idx + 1 }}</a>
+            <div class="comment-author-pip-container">
+                <span *ngFor="let title of comment.author?.titles" class="comment-author-pip">
+                    {{ title.name }}
+                </span>
+            </div>
+            <p class="comment-text">{{ comment.content }}</p>
+        </div>
+    </div>
+</div>

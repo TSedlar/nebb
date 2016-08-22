@@ -1,0 +1,96 @@
+// Phone vars
+$screen-pxs: 320px !default; // i.e iPhone 4/5s
+$screen-psm: 375px !default; // i.e iPhone 6s
+$screen-pmd: 414px !default; // i.e iPhone 6s Plus
+
+// Tablet vars
+$screen-tlg: 1024px !default; // i.e iPad Pro
+
+// Browser vars
+$screen-bxs: 600px !default; // i.e 600x800
+$screen-bsm: 768px !default; // i.e 768x1366
+$screen-bmd: 1080px !default; // i.e 1080x1920
+
+// Device types/refs used for mixins
+$device-types: (pxs, psm, pmd, tlg, bxs, bsm, bmd);
+$device-size-refs: ($screen-pxs, $screen-psm, $screen-pmd, $screen-tlg, $screen-bxs, $screen-bsm, $screen-bmd);
+
+// The total amount of columns, bootstrap uses 12 by default.
+$grid-columns: 12;
+
+// Creates a mixin for checking screen-width == prop
+@mixin custom-col($screen-width, $columns, $prop, $mod) {
+  float: left;
+  display: inline-block;
+  position: relative;
+  @media only screen and ($prop: $screen-width + $mod) {
+    width: floor(percentage($columns / $grid-columns));
+  }
+}
+
+// Creates a mixin for columns <= max-screen-width
+@mixin custom-lcol($max-screen-width, $columns) {
+  @include custom-col($max-screen-width, $columns, max-width, -1);
+}
+
+// Creates a mixin for columns >= min-screen-width
+@mixin custom-gcol($min-screen-width, $columns) {
+  @include custom-col($min-screen-width, $columns, min-width, 0);
+}
+
+// dynamically create classes for setting column types on device match. (i.e col-pxs, col-gpxs)
+@for $i from 1 through $grid-columns {
+  @each $device-type in $device-types {
+    @if $i == 1 {
+      .col-g#{$device-type}-p5 {
+        @include custom-gcol(nth($device-size-refs, index($device-types, $device-type)), $i - 0.5);
+      }
+      .col-l#{$device-type}-p5 {
+        @include custom-lcol(nth($device-size-refs, index($device-types, $device-type)), $i - 0.5);
+      }
+    }
+    .col-g#{$device-type}-#{$i} {
+      @include custom-gcol(nth($device-size-refs, index($device-types, $device-type)), $i);
+    }
+    .col-l#{$device-type}-#{$i} {
+      @include custom-lcol(nth($device-size-refs, index($device-types, $device-type)), $i);
+    }
+    .col-g#{$device-type}-#{$i}p5 {
+      @include custom-gcol(nth($device-size-refs, index($device-types, $device-type)), $i + 0.5);
+    }
+    .col-l#{$device-type}-#{$i}p5 {
+      @include custom-lcol(nth($device-size-refs, index($device-types, $device-type)), $i + 0.5);
+    }
+  }
+}
+
+// Creates a mixin that hides the DOM if max-width >= screen-width
+@mixin hide-if-size($screen-width) {
+  display: inline-block;
+  @media only screen and (max-width: $screen-width) {
+    display: none;
+  }
+}
+
+// Creates a mixin that hides the DOM if max-width <= screen-width
+@mixin hide-if-lsize($screen-width) {
+  @include hide-if-size($screen-width - 1);
+}
+
+// Creates a mixin that hides the DOM if min-width >= screen-width
+@mixin hide-if-gsize($screen-width) {
+  display: inline-block;
+  @media only screen and (min-width: $screen-width) {
+    display: none;
+  }
+}
+
+// dynamically create classes for hiding an element if device match. (i.e hide-if-pxs)
+@each $device-type in $device-types {
+  .hide-if-l#{$device-type} {
+    @include hide-if-lsize(nth($device-size-refs, index($device-types, $device-type)));
+  }
+  .hide-if-g#{$device-type} {
+    @include hide-if-gsize(nth($device-size-refs, index($device-types, $device-type)));
+  }
+}

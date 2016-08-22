@@ -1,0 +1,36 @@
+<title>Categories</title>
+<div class="container">
+  <h5 class="section">Categories</h5>
+  <div *ngFor="let category of categories" class="category row-fluid">
+    <div class="col-lpmd-12 col-lbxs-8 col-gbxs-5">
+        <div class="category-icon pull-left" [style.background]="category.icon_color">
+            <img [src]="category.icon" />
+        </div>
+        <span class="category-title">
+            <a [routerLink]="'/thread-listing/' + category._id">{{ category.name }}</a>
+        </span>
+        <span class="category-description">{{ category.description }}</span>
+    </div>
+    <div class="col-lbxs-4 col-gbxs-2p5 hide-if-lpmd">
+      <div class="row-fluid" style="float: right;">
+        <div class="category-stat col-gpmd-5" style="padding-right: 8px">
+          <span class="category-stat-number">{{ category.topic_count }}</span>
+          <span class="category-stat-label">Topics</span>
+        </div>
+        <div class="category-stat col-gpmd-7" style="padding-left: 8px">
+          <span class="category-stat-number">{{ category.comment_count }}</span>
+          <span class="category-stat-label">Comments</span>
+        </div>
+      </div>
+    </div>
+    <div class="category-teaser col-gbxs-4p5 hide-if-lbxs">
+      <div class="category-separator" [style.border-left]="'4px solid ' + category.icon_color">
+        <div class="teaser-user-icon pull-left">
+          <img class="img-teaser-user-icon" [src]="category.teaser?.author?.avatar" />
+        </div>
+        <span class="teaser-text">{{ category.teaser?.name }}</span>
+        <span class="teaser-date">{{ category.teaser?.updated_at | date:'MMM d yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

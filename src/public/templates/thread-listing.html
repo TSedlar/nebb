@@ -1,0 +1,30 @@
+<div class="container">
+    <h5 class="section">{{ title }}</h5>
+    <div *ngFor="let thread of threads" class="category row-fluid">
+        <div class="col-lpmd-12 col-gpmd-7">
+            <div class="thread-author-icon pull-left">
+                <img class="img-thread-author-icon" [src]="thread.author?.avatar" />
+            </div>
+            <span class="thread-title">
+                <a [routerLink]="'/thread/' + category + '/' + thread._id">{{ thread.name }}</a>
+            </span>
+            <p class="thread-info">
+                <span>{{ thread.created_at | date:'MMM d yyyy' }} &bull; </span>
+                <a [routerLink]="'/users/' + thread.author._id">{{ thread.author?.name }}</a>
+            </p>
+        </div>
+        <div class="comment-teaser col-gpmd-5 hide-if-lpmd">
+            <div class="comment-separator">
+                <div class="comment-user-icon pull-left">
+                    <img class="img-comment-user-icon" [src]="thread.teaser?.author?.avatar" />
+                </div>
+                <a class="comment-date" [routerLink]="
+                    '/thread/' + thread.teaser?.thread?.category?._id + 
+                    '/' + thread.teaser?.thread?._id + '/' + thread.teaser?._id">
+                    {{ thread.teaser?.updated_at | date: 'MMM d yyyy' }}
+                </a>
+                <span class="comment-text">{{ thread.teaser?.content }}</span>
+            </div>
+        </div>
+    </div>
+</div>
