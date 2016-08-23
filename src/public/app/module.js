@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
+import { RouteModule } from './routing'
 import { HTTP_PROVIDERS } from '@angular/http'
 import { Title } from '@angular/platform-browser'
 import { AppComponent } from './component'
 import { Categories } from '../components/categories'
 import { ThreadListing } from '../components/thread-listing'
 import { Thread } from '../components/thread'
-import { RouteModule } from './routing'
+import { User } from '../components/user'
 
 export class AppModule {
 
@@ -15,7 +16,7 @@ export class AppModule {
       new NgModule({
         imports: [ BrowserModule, RouteModule ],
         providers: [ HTTP_PROVIDERS, Title ],
-        declarations: [ AppComponent, Categories, ThreadListing, Thread ],
+        declarations: [ AppComponent, Categories, ThreadListing, Thread, User ],
         bootstrap: [ AppComponent ]
       })
     ]

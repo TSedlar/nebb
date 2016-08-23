@@ -94,4 +94,12 @@ server.post(
       .catch(err => res.status(500).json({ success: false, err: err }))
 )
 
+server.post(
+  '/api/user/get',
+  (req, res) => dbconfig.User
+    .findOne({ _id: req.body.uid })
+      .then(doc => res.json(doc))
+      .catch(err => res.status(500).send(err))
+)
+
 module.exports = server
