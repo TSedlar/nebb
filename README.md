@@ -6,6 +6,8 @@
 
 #### This project is an Electronic Bulletin Board that uses the MEAN stack.
 
+#### This project is in the works -- milestones are set.
+
 ## Code Style
 
 This library adheres to the [StandardJS code style]((https://github.com/feross/standard)).
